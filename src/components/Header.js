@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Badge from "@mui/material/Badge";
-import NavLink from "react-bootstrap/esm/NavLink";
-// import NavLink from "react-router-dom";
-// import MenuItem from "@mui/material/MenuItem";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Menu from "@mui/material/Menu";
 import { Table } from "@mui/material";
+import { Link } from "react-router-dom";
 
-import { useParams } from "react-router-dom";
-
+import { DEL } from "../redux/action/action";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+
+  const [price,setprice]=useState(0);
+  console.log(price);
   const getdata = useSelector((state) => state.CartReducer.carts);
-
-  console.log(getdata);
-
-  console.log(getdata);
+  // console.log(getdata);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -28,18 +26,44 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const {pid}=useParams();
+  // delete for
+
+  const dispatch=useDispatch()
+  const del=(id)=>{
+    dispatch(DEL(id));
+  }
+
+   // for the total price;
+
+   const Total=()=>{
+    let price=0;
+
+    getdata.map((ele,k)=>{
+      return(
+        price=ele.price + price
+
+      )  
+
+    })
+    setprice(price);
+
+  }
+
+  useEffect(()=>{
+    Total();
+  });
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <NavLink href="/" className="text-decoration-none text-light">
+          <Link to="/" className="text-decoration-none text-light">
             Add to Cart
-          </NavLink>
-          <Nav className="mr-auto">
-            <NavLink href="/cart" className="text-decoration-none text-light">
+          </Link>
+          <Nav className="mr-auto m-2">
+            <Link to="/cart" className="text-decoration-none text-light">
               Home
-            </NavLink>
+            </Link>
           </Nav>
           <Badge
             badgeContent={getdata.length}
@@ -83,13 +107,13 @@ const Header = () => {
                     return (
                       <tr key={index}>
                         <td>
-                          <a  href={`/carts/${e.id}`}>
+                          <Link to={`/carts/${e.id}`} onClick={handleClose}>
                             <img
                               src={e.imgdata}
                               alt="cart not found"
                               style={{ width: "5rem", height: "5rem" }}
                             />
-                          </a>
+                          </Link>
                         </td>
                         <td>
                           <p>{e.rname}</p>
@@ -117,7 +141,7 @@ const Header = () => {
                               color: "red",
                             }}
                           >
-                            <i className="fas fa-trash"></i>
+                            <i className="fas fa-trash"  onClick={()=>del(e.id)}></i>
                           </p>
                         </td>
                       </tr>
@@ -125,7 +149,7 @@ const Header = () => {
                   })}
                 </tbody>
 
-                <p className="text-center">Total:- ₹ 300</p>
+                <p className="text-center">Total:- ₹ {price}</p>
               </Table>
             </div>
           ) : (

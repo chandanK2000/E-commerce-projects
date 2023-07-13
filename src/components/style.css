@@ -3,6 +3,10 @@
   transition: 0.3s;
 }
 
+
+Link{
+  padding-left: 10px;
+}
 .smalltrash {
   display: none;
 }
