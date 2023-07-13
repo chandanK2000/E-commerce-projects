@@ -8,7 +8,7 @@ const CardDetails = () => {
     console.log(id);
   return (
     <div className="container mt-2">
-      <h2 className="text-center">Items Details page</h2>
+      <h2 className="text-center">Items Details pages</h2>
 
       <section className="container mt-3 ">
         <div className="iteamsdetails">
