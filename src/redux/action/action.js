@@ -1,22 +1,23 @@
-export const ADD=(item)=>{
-    return{
-        type:"ADD_CART",
-        payload:item
+export const ADD = (item) => {
+    return {
+        type: "ADD_CART",
+        payload: item
     }
 }
 
-// for the del functionality;
-export const DEL=(id)=>{
-    return{
-        type:"RMV_CART",
-        payload:id
+// remove iteams
+export const DLT = (id) => {
+    return {
+        type: "RMV_CART",
+        payload: id
     }
 }
 
-// for the removing individual items;
-// export const REMOVE=(iteam)=>{
-//     return{
-//         type:"RMV_ONE",
-//         payload:iteam
-//     }
-// }
+// remove individual iteam
+
+export const REMOVE = (iteam) => {
+    return {
+        type: "RMV_ONE",
+        payload: iteam
+    }
+}
